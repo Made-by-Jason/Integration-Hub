@@ -1,0 +1,628 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Universal API Integration Dashboard</title>
+  <script src="https://unpkg.com/@microsoft/mgt/dist/bundle/mgt-loader.js"></script>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script src="https://connect.facebook.net/en_US/sdk.js"></script>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container">
+    <a href="#" class="nav-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+      Integration Hub
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <div class="nav-links" role="tablist" aria-label="Main sections">
+      <a href="#" class="nav-link active" data-tab="dashboard">Dashboard</a>
+      <a href="#" class="nav-link" data-tab="automations">Automations</a>
+      <a href="#" class="nav-link" data-tab="analytics">Analytics</a>
+      <a href="#" class="nav-link" data-tab="settings">Settings</a>
+      <a href="#" class="nav-link" data-tab="builder">Builder</a>
+      <label class="theme-toggle">
+        <input type="checkbox" id="theme-switch">
+        <span class="toggle-slider"></span>
+        <span class="toggle-label">Dark Mode</span>
+      </label>
+    </div>
+    <div class="nav-actions">
+      <input id="global-search" class="nav-search" type="search" placeholder="Search…">
+      <button id="avatar-btn" class="avatar" aria-haspopup="true" aria-expanded="false"></button>
+      <div id="avatar-menu" class="dropdown" role="menu" aria-hidden="true">
+        <button data-action="profile">Profile</button>
+        <button data-action="theme">Toggle Theme</button>
+        <button data-action="help">Help</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="main-content">
+  <div class="container">
+    <!-- Dashboard Tab -->
+    <div id="dashboard-tab" class="tab-content active">
+      <header class="page-header">
+        <h1 class="page-title">Integration Dashboard</h1>
+        <p class="page-description">Connect and manage your service integrations from a single dashboard.</p>
+      </header>
+
+      <div class="dashboard">
+        <div class="module">
+          <h2>
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.7 16.3H6.3V7.7h11.4v8.6z"/>
+            </svg>
+            Google Workspace Integration
+          </h2>
+          <button class="connect-btn" onclick="connectGoogle()">Connect & Authorize</button>
+          <div class="status">
+            <span class="status-dot" id="google-status"></span>
+            <span>Status: <span id="google-status-text">Disconnected</span></span>
+          </div>
+          <div class="connection-list">
+            <div class="connection-item" onclick="showJsonPreview('drive')">
+              <svg class="icon" viewBox="0 0 24 24" fill="#4285f4">
+                <path d="M12 10L7 2H17L22 10H12zM12 10L2 10L7 2L12 10zM12 10L17 18L22 10L12 10zM12 10L2 10L7 18L12 10z"/>
+              </svg>
+              Google Drive
+              <div class="automation-controls">
+                <button class="automation-btn">Export Data</button>
+                <button class="automation-btn">Schedule Sync</button>
+              </div>
+            </div>
+            <div id="drive-json" class="json-preview">
+              {"lastSync": "2024-01-20T10:30:00Z","files": ["document.pdf","spreadsheet.xlsx"]}
+            </div>
+          </div>
+        </div>
+
+        <div class="module">
+          <h2>
+            <svg class="icon" viewBox="0 0 24 24" fill="#1877f2">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            Meta Platform Integration
+          </h2>
+          <button class="connect-btn" onclick="connectFacebook()">Connect & Authorize</button>
+          <div class="status">
+            <span class="status-dot" id="facebook-status"></span>
+            <span>Status: <span id="facebook-status-text">Disconnected</span></span>
+          </div>
+          <div class="connection-list">
+            <div class="connection-item" onclick="showJsonPreview('facebook')">
+              Facebook Pages
+              <div class="automation-controls">
+                <button class="automation-btn">Export Insights</button>
+                <button class="automation-btn">Auto Post</button>
+              </div>
+            </div>
+            <div id="facebook-json" class="json-preview">
+              {"pages": ["Business Page","Marketing Page"],"insights": {"reach": 5000,"engagement": 250}}
+            </div>
+          </div>
+        </div>
+
+        <div class="module">
+          <h2>
+            <svg class="icon" viewBox="0 0 24 24" fill="#0a66c2">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z"/>
+            </svg>
+            LinkedIn Integration
+          </h2>
+          <button class="connect-btn" onclick="connectLinkedIn()">Connect & Authorize</button>
+          <div class="status">
+            <span class="status-dot" id="linkedin-status"></span>
+            <span>Status: <span id="linkedin-status-text">Disconnected</span></span>
+          </div>
+          <div class="connection-list">
+            <div class="connection-item" onclick="showJsonPreview('linkedin')">
+              Company Page
+              <div class="automation-controls">
+                <button class="automation-btn">Export Analytics</button>
+                <button class="automation-btn">Schedule Posts</button>
+              </div>
+            </div>
+            <div id="linkedin-json" class="json-preview">
+              {"followers": 1200,"engagementRate": "3.2%","posts": 45}
+            </div>
+          </div>
+        </div>
+
+        <div class="module">
+          <h2>
+            <svg class="icon" viewBox="0 0 24 24" fill="#4A154B"><circle cx="12" cy="12" r="10"/></svg>
+            Slack Integration
+          </h2>
+          <button class="connect-btn" onclick="connectSlack()">Connect & Authorize</button>
+          <div class="status">
+            <span class="status-dot" id="slack-status"></span>
+            <span>Status: <span id="slack-status-text">Disconnected</span></span>
+          </div>
+          <div class="connection-list">
+            <div class="connection-item" onclick="showJsonPreview('slack')">
+              Workspace Channels
+              <div class="automation-controls">
+                <button class="automation-btn">Post Message</button>
+                <button class="automation-btn">Sync Users</button>
+              </div>
+            </div>
+            <div id="slack-json" class="json-preview">
+              {"workspace":"Acme","channels":["general","ops","marketing"]}
+            </div>
+          </div>
+        </div>
+
+        <div class="module">
+          <h2>
+            <svg class="icon" viewBox="0 0 24 24" fill="#000000"><path d="M12 .5l10 5.8v11.4L12 23.5 2 17.7V6.3l7-3.11v8.8z"/></svg>
+            GitHub Integration
+          </h2>
+          <button class="connect-btn" onclick="connectGitHub()">Connect & Authorize</button>
+          <div class="status">
+            <span class="status-dot" id="github-status"></span>
+            <span>Status: <span id="github-status-text">Disconnected</span></span>
+          </div>
+          <div class="connection-list">
+            <div class="connection-item" onclick="showJsonPreview('github')">
+              Repositories
+              <div class="automation-controls">
+                <button class="automation-btn">Export Issues</button>
+                <button class="automation-btn">Sync PRs</button>
+              </div>
+            </div>
+            <div id="github-json" class="json-preview">
+              {"org":"acme","repos":["api","web","mobile"]}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Automations Tab -->
+    <div id="automations-tab" class="tab-content">
+      <header class="page-header">
+        <h1 class="page-title">Automation Workflows</h1>
+        <p class="page-description">Create and manage automated workflows between your integrated services.</p>
+      </header>
+
+      <div class="automation-grid">
+        <div class="automation-card">
+          <div class="automation-header">
+            <h3>Data Sync</h3>
+            <div class="automation-status active">Active</div>
+          </div>
+          <p>Sync Google Drive files to Facebook Storage daily</p>
+          <div class="flow-diagram">
+            <div class="flow-item">
+              <svg class="icon" viewBox="0 0 24 24" fill="#4285f4">
+                <path d="M12 10L7 2H17L22 10H12zM12 10L2 10L7 2L12 10zM12 10L17 18L22 10L12 10zM12 10L2 10L7 18L12 10z"/>
+              </svg>
+              <span>Drive</span>
+            </div>
+            <svg class="flow-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14m-4 4l4-4-4-4"/>
+            </svg>
+            <div class="flow-item">
+              <svg class="icon" viewBox="0 0 24 24" fill="#1877f2">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+              <span>Facebook</span>
+            </div>
+          </div>
+          <div class="automation-controls">
+            <button class="automation-btn" onclick="showAutomationModal()">Edit Flow</button>
+            <button class="automation-btn">View Logs</button>
+          </div>
+        </div>
+
+        <div class="automation-card">
+          <div class="automation-header">
+            <h3>Content Publishing</h3>
+            <div class="automation-status">Paused</div>
+          </div>
+          <p>Auto-post LinkedIn updates from Google Sheets</p>
+          <div class="flow-diagram">
+            <div class="flow-item">
+              <svg class="icon" viewBox="0 0 24 24" fill="#0f9d58">
+                <path d="M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 10.99h-7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+              </svg>
+              <span>Sheets</span>
+            </div>
+            <svg class="flow-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14m-4 4l4-4-4-4"/>
+            </svg>
+            <div class="flow-item">
+              <svg class="icon" viewBox="0 0 24 24" fill="#0a66c2">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z"/>
+              </svg>
+              <span>LinkedIn</span>
+            </div>
+          </div>
+          <div class="automation-controls">
+            <button class="automation-btn" onclick="showAutomationModal()">Edit Flow</button>
+            <button class="automation-btn">Resume</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analytics Tab -->
+    <div id="analytics-tab" class="tab-content">
+      <header class="page-header">
+        <h1 class="page-title">Integration Analytics</h1>
+        <p class="page-description">Monitor and analyze your integration performance across all connected services.</p>
+      </header>
+
+      <div class="analytics-grid">
+        <div class="analytics-card">
+          <h3>Integration Health</h3>
+          <div class="metrics-grid">
+            <div class="metric">
+              <div class="metric-value">98.5%</div>
+              <div class="metric-label">Uptime</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">1.2s</div>
+              <div class="metric-label">Avg Response</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">5,234</div>
+              <div class="metric-label">API Calls</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="analytics-card">
+          <h3>Service Usage</h3>
+          <div class="usage-chart">
+            <div class="chart-bar" style="height: 80%">
+              <span class="chart-label">Google</span>
+            </div>
+            <div class="chart-bar" style="height: 60%">
+              <span class="chart-label">Facebook</span>
+            </div>
+            <div class="chart-bar" style="height: 40%">
+              <span class="chart-label">LinkedIn</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="analytics-card">
+          <h3>Latency Percentiles</h3>
+          <div class="metrics-grid">
+            <div class="metric">
+              <div class="metric-value">120ms</div>
+              <div class="metric-label">p50</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">240ms</div>
+              <div class="metric-label">p95</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">410ms</div>
+              <div class="metric-label">p99</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="analytics-card">
+          <h3>Error Breakdown</h3>
+          <div class="endpoint-list">
+            <div class="endpoint-item">
+              <div class="endpoint-info">
+                <svg class="icon" viewBox="0 0 24 24" fill="#ef4444"><circle cx="12" cy="12" r="10"/></svg>
+                <div>5xx Server Errors</div>
+              </div>
+              <span class="mini-badge error">72</span>
+            </div>
+            <div class="endpoint-item">
+              <div class="endpoint-info">
+                <svg class="icon" viewBox="0 0 24 24" fill="#f59e0b"><circle cx="12" cy="12" r="10"/></svg>
+                <div>4xx Client Errors</div>
+              </div>
+              <span class="mini-badge inactive">131</span>
+            </div>
+            <div class="endpoint-item">
+              <div class="endpoint-info">
+                <svg class="icon" viewBox="0 0 24 24" fill="#22c55e"><circle cx="12" cy="12" r="10"/></svg>
+                <div>Rate Limits</div>
+              </div>
+              <span class="mini-badge active">23</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="analytics-card full-width">
+          <h3>API Network Monitor</h3>
+          <div class="network-controls">
+            <button class="network-btn active" data-view="topology">Topology View</button>
+            <button class="network-btn" data-view="list">List View</button>
+            <div class="network-filter">
+              <input type="text" placeholder="Filter endpoints..." id="endpoint-filter">
+              <select id="status-filter">
+                <option value="all">All Statuses</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="error">Error</option>
+              </select>
+            </div>
+          </div>
+          <div id="network-monitor" class="network-monitor">
+            <!-- Topology View Container -->
+            <div id="topology-view" class="network-view active">
+              <svg id="network-connections" class="network-svg"></svg>
+            </div>
+            <!-- List View Container (populated by JS) -->
+            <div id="list-view" class="network-view">
+              <!-- Endpoint list will be rendered here by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Tab -->
+    <div id="settings-tab" class="tab-content">
+      <header class="page-header">
+        <h1 class="page-title">Integration Settings</h1>
+        <p class="page-description">Configure your integration preferences and API credentials.</p>
+      </header>
+
+      <div class="settings-grid">
+        <div class="settings-card">
+          <h3>API Configuration</h3>
+          <div class="settings-form">
+            <div class="form-group">
+              <label>Google Client ID</label>
+              <input type="text" placeholder="Enter client ID" value="••••••••••••••••"/>
+            </div>
+            <div class="form-group">
+              <label>Facebook App ID</label>
+              <input type="text" placeholder="Enter app ID" value="••••••••••••••••"/>
+            </div>
+            <div class="form-group">
+              <label>LinkedIn API Key</label>
+              <input type="text" placeholder="Enter API key" value="••••••••••••••••"/>
+            </div>
+            <button class="connect-btn">Save Changes</button>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <h3>Notification Preferences</h3>
+          <div class="settings-toggles">
+            <label class="toggle-row">
+              <span>Email Notifications</span>
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+            <label class="toggle-row">
+              <span>Error Alerts</span>
+              <input type="checkbox" checked />
+              <span class="toggle-slider"></span>
+            </label>
+            <label class="toggle-row">
+              <span>Weekly Reports</span>
+              <input type="checkbox" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Builder Tab -->
+    <div id="builder-tab" class="tab-content">
+      <div class="container">
+        <div id="builder-root"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="automation-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Edit Automation Flow</h2>
+      <button class="modal-close">&times;</button>
+    </div>
+    
+    <div class="flow-editor">
+      <div class="nodes-palette">
+        <h3>Available Nodes</h3>
+        <div class="node-item" draggable="true" data-node-type="source">
+          <svg class="icon" viewBox="0 0 24 24" fill="#4285f4">
+            <path d="M12 10L7 2H17L22 10H12zM12 10L2 10L7 2L12 10zM12 10L17 18L22 10L12 10zM12 10L2 10L7 18L12 10z"/>
+          </svg>
+          Google Drive Source
+        </div>
+        <div class="node-item" draggable="true" data-node-type="source">
+          <svg class="icon" viewBox="0 0 24 24" fill="#1877f2">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+          Facebook Source
+        </div>
+        <div class="node-item" draggable="true" data-node-type="transform">
+          <svg class="icon" viewBox="0 0 24 24" fill="#34a853">
+            <path d="M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 10.99h-7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+          </svg>
+          Data Cleanse
+        </div>
+        <div class="node-item" draggable="true" data-node-type="security">
+          <svg class="icon" viewBox="0 0 24 24" fill="#ea4335">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h-7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+          </svg>
+          Security Gate
+        </div>
+      </div>
+
+      <div class="flow-canvas">
+        <div class="flow-node source-node" data-node-id="node1" style="position: absolute; left: 100px; top: 100px;">
+          <div class="node-header">Source</div>
+          <div class="node-config">
+            <select class="node-select" onchange="updateNodeParams('node1', this.value)">
+              <option value="google-drive">Google Drive</option>
+              <option value="facebook">Facebook</option>
+              <option value="linkedin">LinkedIn</option>
+            </select>
+            <div class="node-params" id="params-node1">
+              <label>Path
+                <input type="text" placeholder="/data/exports"/>
+              </label>
+              <label>Filter
+                <input type="text" placeholder="*.json"/>
+              </label>
+            </div>
+          </div>
+          <div class="node-actions">
+            <button class="automation-btn" onclick="deleteNode('node1')">Delete</button>
+            <button class="automation-btn" onclick="testNode('node1')">Test</button>
+          </div>
+        </div>
+
+        <div class="flow-node transform-node" data-node-id="node2" style="position: absolute; left: 300px; top: 150px;">
+          <div class="node-header">Transform</div>
+          <div class="node-config">
+            <select class="node-select" onchange="updateNodeParams('node2', this.value)">
+              <option value="data-cleanse">Data Cleanse</option>
+              <option value="format-convert">Format Convert</option>
+              <option value="field-map">Field Map</option>
+            </select>
+            <div class="node-params" id="params-node2">
+              <label>Schema
+                <select>
+                  <option>Standard</option>
+                  <option>Custom</option>
+                </select>
+              </label>
+              <label>Sanitize
+                <input type="checkbox" checked/>
+              </label>
+            </div>
+          </div>
+          <div class="node-actions">
+            <button class="automation-btn" onclick="deleteNode('node2')">Delete</button>
+            <button class="automation-btn" onclick="testNode('node2')">Test</button>
+          </div>
+        </div>
+
+        <div class="flow-node security-node" data-node-id="node3" style="position: absolute; left: 500px; top: 100px;">
+          <div class="node-header">Security</div>
+          <div class="node-config">
+            <select class="node-select" onchange="updateNodeParams('node3', this.value)">
+              <option value="encryption">Encryption</option>
+              <option value="access-control">Access Control</option>
+              <option value="audit-log">Audit Log</option>
+            </select>
+            <div class="node-params" id="params-node3">
+              <label>Level
+                <select>
+                  <option>High</option>
+                  <option>Medium</option>
+                  <option>Low</option>
+                </select>
+              </label>
+              <label>Retain Logs
+                <input type="checkbox" checked/>
+              </label>
+            </div>
+          </div>
+          <div class="node-actions">
+            <button class="automation-btn" onclick="deleteNode('node3')">Delete</button>
+            <button class="automation-btn" onclick="testNode('node3')">Test</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="flow-actions">
+        <button class="automation-btn">Test Flow</button>
+        <button class="automation-btn">Save Flow</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Network Node Modal -->
+<div id="network-node-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Configure API Endpoint</h2>
+      <button class="modal-close">&times;</button>
+    </div>
+    
+    <div class="node-configuration">
+      <div class="config-section">
+        <h3>Endpoint Details</h3>
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" id="node-name" placeholder="Endpoint name">
+        </div>
+        <div class="form-group">
+          <label>Service</label>
+          <select id="node-service">
+            <option value="google">Google</option>
+            <option value="facebook">Facebook</option>
+            <option value="linkedin">LinkedIn</option>
+            <option value="instagram">Instagram</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Endpoint URL</label>
+          <input type="text" id="node-url" placeholder="https://api.example.com/v1">
+        </div>
+        <div class="form-group">
+          <label>Authentication</label>
+          <select id="node-auth">
+            <option value="oauth2">OAuth 2.0</option>
+            <option value="apikey">API Key</option>
+            <option value="basic">Basic Auth</option>
+            <option value="none">None</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="config-section">
+        <h3>Connection Settings</h3>
+        <div class="form-group">
+          <label>Rate Limit (req/min)</label>
+          <input type="number" id="node-rate" min="1" max="1000" value="60">
+        </div>
+        <div class="form-group">
+          <label>Timeout (seconds)</label>
+          <input type="number" id="node-timeout" min="1" max="60" value="30">
+        </div>
+        <div class="form-group">
+          <label>Retry Strategy</label>
+          <select id="node-retry">
+            <option value="exponential">Exponential Backoff</option>
+            <option value="fixed">Fixed Interval</option>
+            <option value="none">No Retry</option>
+          </select>
+        </div>
+        <label class="toggle-row">
+          <span>Active</span>
+          <input type="checkbox" id="node-active" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="flow-actions">
+        <button class="network-btn" id="test-connection">Test Connection</button>
+        <button class="network-btn" id="save-endpoint">Save Endpoint</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
