@@ -1,0 +1,73 @@
+<div id="network-node-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Configure API Endpoint</h2>
+      <button class="modal-close">&times;</button>
+    </div>
+    
+    <div class="node-configuration">
+      <div class="config-section">
+        <h3>Endpoint Details</h3>
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" id="node-name" placeholder="Endpoint name">
+        </div>
+        <div class="form-group">
+          <label>Service</label>
+          <select id="node-service">
+            <option value="google">Google</option>
+            <option value="facebook">Facebook</option>
+            <option value="linkedin">LinkedIn</option>
+            <option value="instagram">Instagram</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Endpoint URL</label>
+          <input type="text" id="node-url" placeholder="https://api.example.com/v1">
+        </div>
+        <div class="form-group">
+          <label>Authentication</label>
+          <select id="node-auth">
+            <option value="oauth2">OAuth 2.0</option>
+            <option value="apikey">API Key</option>
+            <option value="basic">Basic Auth</option>
+            <option value="none">None</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="config-section">
+        <h3>Connection Settings</h3>
+        <div class="form-group">
+          <label>Rate Limit (req/min)</label>
+          <input type="number" id="node-rate" min="1" max="1000" value="60">
+        </div>
+        <div class="form-group">
+          <label>Timeout (seconds)</label>
+          <input type="number" id="node-timeout" min="1" max="60" value="30">
+        </div>
+        <div class="form-group">
+          <label>Retry Strategy</label>
+          <select id="node-retry">
+            <option value="exponential">Exponential Backoff</option>
+            <option value="fixed">Fixed Interval</option>
+            <option value="none">No Retry</option>
+          </select>
+        </div>
+        <label class="toggle-row">
+          <span>Active</span>
+          <input type="checkbox" id="node-active" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="flow-actions">
+        <button class="network-btn" id="test-connection">Test Connection</button>
+        <button class="network-btn" id="save-endpoint">Save Endpoint</button>
+      </div>
+    </div>
+  </div>
+</div>

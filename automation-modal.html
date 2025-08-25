@@ -1,0 +1,123 @@
+<div id="automation-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Edit Automation Flow</h2>
+      <button class="modal-close">&times;</button>
+    </div>
+    
+    <div class="flow-editor">
+      <div class="nodes-palette">
+        <h3>Available Nodes</h3>
+        <div class="node-item" draggable="true" data-node-type="source">
+          <svg class="icon" viewBox="0 0 24 24" fill="#4285f4">
+            <path d="M12 10L7 2H17L22 10H12zM12 10L2 10L7 2L12 10zM12 10L17 18L22 10L12 10zM12 10L2 10L7 18L12 10z"/>
+          </svg>
+          Google Drive Source
+        </div>
+        <div class="node-item" draggable="true" data-node-type="source">
+          <svg class="icon" viewBox="0 0 24 24" fill="#1877f2">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+          Facebook Source
+        </div>
+        <div class="node-item" draggable="true" data-node-type="transform">
+          <svg class="icon" viewBox="0 0 24 24" fill="#34a853">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 7H5V5h7v5zm7 0h-7V5h7v5zm-7 9H5v-5h7v5zm7 0h-7v-5h7v5z"/>
+          </svg>
+          Data Cleanse
+        </div>
+        <div class="node-item" draggable="true" data-node-type="security">
+          <svg class="icon" viewBox="0 0 24 24" fill="#ea4335">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+          </svg>
+          Security Gate
+        </div>
+      </div>
+
+      <div class="flow-canvas">
+        <div class="flow-node source-node" data-node-id="node1" style="position: absolute; left: 100px; top: 100px;">
+          <div class="node-header">Source</div>
+          <div class="node-config">
+            <select class="node-select" onchange="updateNodeParams('node1', this.value)">
+              <option value="google-drive">Google Drive</option>
+              <option value="facebook">Facebook</option>
+              <option value="linkedin">LinkedIn</option>
+            </select>
+            <div class="node-params" id="params-node1">
+              <label>Path
+                <input type="text" placeholder="/data/exports"/>
+              </label>
+              <label>Filter
+                <input type="text" placeholder="*.json"/>
+              </label>
+            </div>
+          </div>
+          <div class="node-actions">
+            <button class="automation-btn" onclick="deleteNode('node1')">Delete</button>
+            <button class="automation-btn" onclick="testNode('node1')">Test</button>
+          </div>
+        </div>
+
+        <div class="flow-node transform-node" data-node-id="node2" style="position: absolute; left: 300px; top: 150px;">
+          <div class="node-header">Transform</div>
+          <div class="node-config">
+            <select class="node-select" onchange="updateNodeParams('node2', this.value)">
+              <option value="data-cleanse">Data Cleanse</option>
+              <option value="format-convert">Format Convert</option>
+              <option value="field-map">Field Map</option>
+            </select>
+            <div class="node-params" id="params-node2">
+              <label>Schema
+                <select>
+                  <option>Standard</option>
+                  <option>Custom</option>
+                </select>
+              </label>
+              <label>Sanitize
+                <input type="checkbox" checked/>
+              </label>
+            </div>
+          </div>
+          <div class="node-actions">
+            <button class="automation-btn" onclick="deleteNode('node2')">Delete</button>
+            <button class="automation-btn" onclick="testNode('node2')">Test</button>
+          </div>
+        </div>
+
+        <div class="flow-node security-node" data-node-id="node3" style="position: absolute; left: 500px; top: 100px;">
+          <div class="node-header">Security</div>
+          <div class="node-config">
+            <select class="node-select" onchange="updateNodeParams('node3', this.value)">
+              <option value="encryption">Encryption</option>
+              <option value="access-control">Access Control</option>
+              <option value="audit-log">Audit Log</option>
+            </select>
+            <div class="node-params" id="params-node3">
+              <label>Level
+                <select>
+                  <option>High</option>
+                  <option>Medium</option>
+                  <option>Low</option>
+                </select>
+              </label>
+              <label>Retain Logs
+                <input type="checkbox" checked/>
+              </label>
+            </div>
+          </div>
+          <div class="node-actions">
+            <button class="automation-btn" onclick="deleteNode('node3')">Delete</button>
+            <button class="automation-btn" onclick="testNode('node3')">Test</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="flow-actions">
+        <button class="automation-btn">Test Flow</button>
+        <button class="automation-btn">Save Flow</button>
+      </div>
+    </div>
+  </div>
+</div>
