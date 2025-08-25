@@ -1,0 +1,68 @@
+<header class="page-header">
+  <h1 class="page-title">Template Builder & Code Generator</h1>
+  <p class="page-description">Manage templates, assemble components, and generate production-ready code.</p>
+</header>
+
+<div class="builder-grid">
+  <section class="template-panel">
+    <h3>Templates</h3>
+    <div class="actions-row">
+      <button class="automation-btn" id="tmpl-new">New</button>
+      <button class="automation-btn" id="tmpl-import">Import</button>
+      <button class="automation-btn" id="tmpl-export">Export Selected</button>
+      <select id="tmpl-filter" class="text-light" style="margin-left:auto;">
+        <option value="all">All Types</option>
+        <option>Web Page</option>
+        <option>API</option>
+        <option>Web Component</option>
+        <option>Mobile App</option>
+      </select>
+    </div>
+    <div class="template-list" id="tmpl-list"></div>
+    <hr style="border:none;border-top:1px solid var(--border);margin:16px 0;">
+    <h4>Marketplace</h4>
+    <div class="template-list" id="tmpl-market"></div>
+    <input type="file" id="tmpl-file" accept=".json" style="display:none;">
+  </section>
+
+  <section class="generator-panel">
+    <h3>Generator</h3>
+    <div class="actions-row">
+      <select id="tmpl-select" style="min-width:240px;"></select>
+      <span id="tmpl-meta" class="badge">—</span>
+      <button class="automation-btn" id="tmpl-duplicate">Duplicate</button>
+      <button class="automation-btn" id="tmpl-delete">Delete</button>
+    </div>
+
+    <div id="placeholder-form" style="display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:12px 0;"></div>
+
+    <div class="actions-row">
+      <button class="connect-btn" id="generate-code">Generate</button>
+      <button class="automation-btn" id="download-code">Download</button>
+      <button class="automation-btn" id="copy-code">Copy</button>
+      <span id="deps-badge" class="badge">Dependencies: —</span>
+    </div>
+
+    <label class="text-light" style="display:block;margin-top:12px;">Generated Code</label>
+    <textarea id="code-output" class="code-area" spellcheck="false"></textarea>
+
+    <details style="margin-top:12px;">
+      <summary class="text-light">Edit Template Source</summary>
+      <div class="actions-row" style="margin:8px 0;">
+        <input id="tmpl-name" type="text" placeholder="Template Name" style="flex:1; padding:8px; border:1px solid var(--border); border-radius:6px; background:var(--background); color:var(--text);">
+        <select id="tmpl-type">
+          <option>Web Page</option><option>API</option><option>Web Component</option><option>Mobile App</option>
+        </select>
+        <select id="tmpl-lang">
+          <option>HTML</option><option>JavaScript</option><option>TypeScript</option><option>Python</option><option>Markdown</option>
+        </select>
+      </div>
+      <textarea id="tmpl-source" class="code-area" style="min-height:200px;" placeholder="Your template content with placeholders like {{AppName}}, {{ComponentName}}..."></textarea>
+      <label class="text-light" style="display:block;margin-top:8px;">Dependencies (comma separated CDN URLs or package names)</label>
+      <input id="tmpl-deps" type="text" placeholder="e.g., react, react-dom, https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" style="width:100%; padding:8px; border:1px solid var(--border); border-radius:6px; background:var(--background); color:var(--text);">
+      <div class="actions-row" style="margin-top:10px;">
+        <button class="connect-btn" id="save-template">Save Template</button>
+      </div>
+    </details>
+  </section>
+</div>

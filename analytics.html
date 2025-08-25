@@ -1,0 +1,73 @@
+<header class="page-header">
+  <h1 class="page-title">Integration Analytics</h1>
+  <p class="page-description">Monitor and analyze your integration performance across all connected services.</p>
+</header>
+
+<div class="analytics-grid">
+  <div class="analytics-card">
+    <h3>Integration Health</h3>
+    <div class="metrics-grid">
+      <div class="metric">
+        <div class="metric-value">98.5%</div>
+        <div class="metric-label">Uptime</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">1.2s</div>
+        <div class="metric-label">Avg Response</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">5,234</div>
+        <div class="metric-label">API Calls</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="analytics-card">
+    <h3>Service Usage</h3>
+    <div class="usage-chart">
+      <div class="chart-bar" style="height: 80%">
+        <span class="chart-label">Google</span>
+      </div>
+      <div class="chart-bar" style="height: 60%">
+        <span class="chart-label">Facebook</span>
+      </div>
+      <div class="chart-bar" style="height: 40%">
+        <span class="chart-label">LinkedIn</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="analytics-card full-width">
+    <h3>API Network Monitor</h3>
+    <div class="network-controls">
+      <button class="network-btn active" data-view="topology">Topology View</button>
+      <button class="network-btn" data-view="list">List View</button>
+      <div class="network-filter">
+        <input type="text" placeholder="Filter endpoints..." id="endpoint-filter">
+        <select id="status-filter">
+          <option value="all">All Statuses</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+          <option value="error">Error</option>
+        </select>
+        <div class="zoom-controls">
+          <button id="zoom-out" class="automation-btn">-</button>
+          <span id="zoom-level" class="text-light">100%</span>
+          <button id="zoom-in" class="automation-btn">+</button>
+          <button id="zoom-reset" class="automation-btn">Reset</button>
+          <button id="open-help" class="automation-btn">Help ⓘ</button>
+        </div>
+      </div>
+    </div>
+    <div id="network-monitor" class="network-monitor">
+      <!-- Topology View Container -->
+      <div id="topology-view" class="network-view active">
+        <svg id="network-connections" class="network-svg"></svg>
+      </div>
+      <!-- List View Container (populated by JS) -->
+      <div id="list-view" class="network-view">
+        <!-- Endpoint list will be rendered here by JS -->
+      </div>
+    </div>
+  </div>
+</div>

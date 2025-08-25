@@ -1,0 +1,87 @@
+<header class="page-header">
+  <h1 class="page-title">Integration Dashboard</h1>
+  <p class="page-description">Connect and manage your service integrations from a single dashboard.</p>
+</header>
+
+<div class="dashboard">
+  <div class="module">
+    <h2>
+      <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.7 16.3H6.3V7.7h11.4v8.6z"/>
+      </svg>
+      Google Workspace Integration
+    </h2>
+    <button class="connect-btn" onclick="connectGoogle()">Connect & Authorize</button>
+    <div class="status">
+      <span class="status-dot" id="google-status"></span>
+      <span>Status: <span id="google-status-text">Disconnected</span></span>
+    </div>
+    <div class="connection-list">
+      <div class="connection-item" onclick="showJsonPreview('drive')">
+        <svg class="icon" viewBox="0 0 24 24" fill="#4285f4">
+          <path d="M12 10L7 2H17L22 10H12zM12 10L2 10L7 2L12 10zM12 10L17 18L22 10L12 10zM12 10L2 10L7 18L12 10z"/>
+        </svg>
+        Google Drive
+        <div class="automation-controls">
+          <button class="automation-btn">Export Data</button>
+          <button class="automation-btn">Schedule Sync</button>
+        </div>
+      </div>
+      <div id="drive-json" class="json-preview">
+        {"lastSync": "2024-01-20T10:30:00Z","files": ["document.pdf","spreadsheet.xlsx"]}
+      </div>
+    </div>
+  </div>
+
+  <div class="module">
+    <h2>
+      <svg class="icon" viewBox="0 0 24 24" fill="#1877f2">
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+      Meta Platform Integration
+    </h2>
+    <button class="connect-btn" onclick="connectFacebook()">Connect & Authorize</button>
+    <div class="status">
+      <span class="status-dot" id="facebook-status"></span>
+      <span>Status: <span id="facebook-status-text">Disconnected</span></span>
+    </div>
+    <div class="connection-list">
+      <div class="connection-item" onclick="showJsonPreview('facebook')">
+        Facebook Pages
+        <div class="automation-controls">
+          <button class="automation-btn">Export Insights</button>
+          <button class="automation-btn">Auto Post</button>
+        </div>
+      </div>
+      <div id="facebook-json" class="json-preview">
+        {"pages": ["Business Page","Marketing Page"],"insights": {"reach": 5000,"engagement": 250}}
+      </div>
+    </div>
+  </div>
+
+  <div class="module">
+    <h2>
+      <svg class="icon" viewBox="0 0 24 24" fill="#0a66c2">
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z"/>
+        </svg>
+      LinkedIn Integration
+    </h2>
+    <button class="connect-btn" onclick="connectLinkedIn()">Connect & Authorize</button>
+    <div class="status">
+      <span class="status-dot" id="linkedin-status"></span>
+      <span>Status: <span id="linkedin-status-text">Disconnected</span></span>
+    </div>
+    <div class="connection-list">
+      <div class="connection-item" onclick="showJsonPreview('linkedin')">
+        Company Page
+        <div class="automation-controls">
+          <button class="automation-btn">Export Analytics</button>
+          <button class="automation-btn">Schedule Posts</button>
+        </div>
+      </div>
+      <div id="linkedin-json" class="json-preview">
+        {"followers": 1200,"engagementRate": "3.2%","posts": 45}
+      </div>
+    </div>
+  </div>
+</div>
