@@ -1,6 +1,38 @@
-// State variables
+// --- CONFIGURATION ---
+const nodePaletteConfig = [
+  { type: 'source', label: 'Google Drive Source', icon: '<path d="M12 10L7 2H17L22 10H12zM12 10L2 10L7 2L12 10zM12 10L17 18L22 10L12 10zM12 10L2 10L7 18L12 10z"/>', color: '#4285f4' },
+  { type: 'source', label: 'Facebook Source', icon: '<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>', color: '#1877f2' },
+  { type: 'transform', label: 'Data Cleanse', icon: '<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 7H5V5h7v5zm7 0h-7V5h7v5zm-7 9H5v-5h7v5zm7 0h-7v-5h7v5z"/>', color: '#34a853' },
+  { type: 'security', label: 'Security Gate', icon: '<path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>', color: '#ea4335' }
+];
+
+
+// --- STATE ---
 let draggedNode = null;
 let nodeCounter = 4; // Start after existing nodes
+
+
+// --- INITIALIZATION ---
+export function initializeAutomationModal() {
+  populateNodesPalette();
+  handleNodeEvents.initializeDraggableNodes();
+}
+
+function populateNodesPalette() {
+  const palette = document.querySelector('.nodes-palette');
+  palette.innerHTML = '<h3>Available Nodes</h3>'; // Clear existing
+  nodePaletteConfig.forEach(node => {
+    const nodeEl = document.createElement('div');
+    nodeEl.className = 'node-item';
+    nodeEl.draggable = true;
+    nodeEl.dataset.nodeType = node.type;
+    nodeEl.innerHTML = `
+      <svg class="icon" viewBox="0 0 24 24" fill="${node.color}">${node.icon}</svg>
+      ${node.label}
+    `;
+    palette.appendChild(nodeEl);
+  });
+}
 
 // Node event handling
 export const handleNodeEvents = {

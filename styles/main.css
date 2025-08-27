@@ -1006,6 +1006,83 @@ input[type="checkbox"] {
   justify-content: flex-end;
 }
 
+.flow-editor {
+  display: flex;
+  gap: 16px;
+  flex-grow: 1;
+  min-height: 500px;
+}
+
+.nodes-palette {
+  width: 250px;
+  border-right: 1px solid var(--border);
+  padding-right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.node-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: grab;
+  background: var(--background);
+  transition: background 0.2s;
+}
+
+.node-item:hover {
+  background: var(--border);
+}
+
+.flow-canvas {
+  flex-grow: 1;
+  position: relative;
+  background: var(--background);
+  border-radius: 8px;
+}
+
+.flow-node {
+  position: absolute;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  width: 200px;
+  box-shadow: var(--shadow-light);
+}
+
+.node-header {
+  font-weight: 600;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.node-config {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.node-actions {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .flow-actions {
   display: flex;
   gap: 12px;

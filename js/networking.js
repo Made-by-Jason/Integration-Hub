@@ -9,7 +9,10 @@ let networkNodes = [
     x: 150,
     y: 150,
     status: 'active',
-    connections: ['data-processor']
+    connections: ['data-processor'],
+    rateLimit: 100,
+    timeout: 30,
+    retry: 'exponential'
   },
   {
     id: 'facebook-graph',
@@ -20,7 +23,10 @@ let networkNodes = [
     x: 400,
     y: 120,
     status: 'active',
-    connections: ['data-processor', 'analytics-engine']
+    connections: ['data-processor', 'analytics-engine'],
+    rateLimit: 100,
+    timeout: 30,
+    retry: 'exponential'
   },
   {
     id: 'linkedin-api',
@@ -31,7 +37,10 @@ let networkNodes = [
     x: 280,
     y: 300,
     status: 'inactive',
-    connections: ['analytics-engine']
+    connections: ['analytics-engine'],
+    rateLimit: 100,
+    timeout: 30,
+    retry: 'exponential'
   },
   {
     id: 'data-processor',
@@ -42,7 +51,10 @@ let networkNodes = [
     x: 250,
     y: 220,
     status: 'active',
-    connections: ['security-gateway']
+    connections: ['security-gateway'],
+    rateLimit: 100,
+    timeout: 30,
+    retry: 'exponential'
   },
   {
     id: 'security-gateway',
@@ -53,7 +65,10 @@ let networkNodes = [
     x: 500,
     y: 250,
     status: 'active',
-    connections: []
+    connections: [],
+    rateLimit: 100,
+    timeout: 30,
+    retry: 'exponential'
   },
   {
     id: 'analytics-engine',
@@ -64,7 +79,10 @@ let networkNodes = [
     x: 650,
     y: 180,
     status: 'error',
-    connections: ['security-gateway']
+    connections: ['security-gateway'],
+    rateLimit: 100,
+    timeout: 30,
+    retry: 'exponential'
   }
 ];
 
@@ -380,6 +398,9 @@ export function configureNode(nodeId) {
   document.getElementById('node-service').value = node.service;
   document.getElementById('node-url').value = node.url;
   document.getElementById('node-active').checked = node.status === 'active';
+  document.getElementById('node-rate').value = node.rateLimit || 60;
+  document.getElementById('node-timeout').value = node.timeout || 30;
+  document.getElementById('node-retry').value = node.retry || 'exponential';
   
   // Store the current node ID for saving
   document.getElementById('save-endpoint').dataset.nodeId = nodeId;
@@ -466,6 +487,9 @@ function saveNodeConfiguration() {
   node.service = document.getElementById('node-service').value;
   node.url = document.getElementById('node-url').value;
   node.status = document.getElementById('node-active').checked ? 'active' : 'inactive';
+  node.rateLimit = document.getElementById('node-rate').value;
+  node.timeout = document.getElementById('node-timeout').value;
+  node.retry = document.getElementById('node-retry').value;
   
   // Close modal and refresh view
   document.getElementById('network-node-modal').classList.remove('active');

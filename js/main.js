@@ -1,8 +1,8 @@
 // Configuration object
 import { config } from './config.js';
 import { initUI } from './ui.js';
-import { connectGoogle, connectFacebook, connectLinkedIn, connectSlack, connectGitHub } from './integrations.js';
-import { handleNodeEvents, createNewNode, deleteNode, testNode, updateNodeParams } from './automation.js';
+import { connectGoogle, connectGoogleWorkspace, connectFacebook, connectLinkedIn, connectSlack, connectGitHub } from './integrations.js';
+import { initializeAutomationModal, handleNodeEvents, createNewNode, deleteNode, testNode, updateNodeParams } from './automation.js';
 import { initNetworkMonitor, configureNode, toggleNodeStatus } from './networking.js';
 import { initBuilder, builderAPI } from './builder.js';
 
@@ -15,6 +15,7 @@ window.addEventListener('load', () => {
 
 // Expose functions to global scope for HTML event handlers
 window.connectGoogle = connectGoogle;
+window.connectGoogleWorkspace = connectGoogleWorkspace;
 window.connectFacebook = connectFacebook;
 window.connectLinkedIn = connectLinkedIn;
 window.connectSlack = connectSlack;
@@ -27,7 +28,7 @@ window.showJsonPreview = (service) => {
 };
 window.showAutomationModal = () => {
   document.getElementById('automation-modal').classList.add('active');
-  handleNodeEvents.initializeDraggableNodes();
+  initializeAutomationModal();
 };
 window.hideAutomationModal = () => {
   document.getElementById('automation-modal').classList.remove('active');

@@ -1,4 +1,50 @@
 // UI-related functions
+function initProfileModal() {
+  const profileModal = document.getElementById('profile-modal');
+  const avatarMenu = document.getElementById('avatar-menu');
+  const saveProfileBtn = document.getElementById('save-profile');
+
+  // Show the profile modal
+  const showProfileModal = () => {
+    profileModal.classList.add('active');
+    loadProfile();
+  };
+
+  // Hide the profile modal
+  const hideProfileModal = () => {
+    profileModal.classList.remove('active');
+  };
+
+  // Load profile data from local storage
+  const loadProfile = () => {
+    const profile = JSON.parse(localStorage.getItem('userProfile')) || {};
+    document.getElementById('profile-name').value = profile.name || '';
+    document.getElementById('profile-email').value = profile.email || '';
+    document.getElementById('profile-company').value = profile.company || '';
+  };
+
+  // Save profile data to local storage
+  const saveProfile = () => {
+    const profile = {
+      name: document.getElementById('profile-name').value,
+      email: document.getElementById('profile-email').value,
+      company: document.getElementById('profile-company').value,
+    };
+    localStorage.setItem('userProfile', JSON.stringify(profile));
+    hideProfileModal();
+  };
+
+  // Event listeners
+  avatarMenu.addEventListener('click', (e) => {
+    if (e.target.dataset.action === 'profile') {
+      showProfileModal();
+    }
+  });
+
+  saveProfileBtn.addEventListener('click', saveProfile);
+  profileModal.querySelector('.modal-close').addEventListener('click', hideProfileModal);
+}
+
 export function initUI() {
   // Add tab switching functionality
   document.querySelectorAll('.nav-link').forEach(link => {
@@ -93,4 +139,7 @@ export function initUI() {
     document.addEventListener('click', (e)=>{ if(!menu.contains(e.target) && e.target!==avatarBtn){ menu.setAttribute('aria-hidden','true'); menu.classList.remove('show'); avatarBtn.setAttribute('aria-expanded','false'); }});
     menu.addEventListener('click', (e)=>{ const a=e.target.dataset.action; if(a==='theme'){ document.getElementById('theme-switch')?.click(); }});
   }
+
+  // Initialize profile modal
+  initProfileModal();
 }

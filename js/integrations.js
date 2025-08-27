@@ -44,6 +44,28 @@ export const connectGoogle = handleError(async () => {
   }
 });
 
+export const connectGoogleWorkspace = handleError(async () => {
+  if (typeof gapi === 'undefined') {
+    throw new Error('Google API not loaded');
+  }
+
+  const workspaceScopes = [
+    'https://www.googleapis.com/auth/drive',
+    'https://www.googleapis.com/auth/documents',
+    'https://www.googleapis.com/auth/spreadsheets',
+  ].join(' ');
+
+  const auth = await gapi.auth2.getAuthInstance().signIn({
+    scope: workspaceScopes,
+  });
+
+  if (auth) {
+    document.getElementById('google-status').classList.add('connected');
+    document.getElementById('google-status-text').textContent = 'Connected to Workspace';
+    await initializeGoogleServices();
+  }
+});
+
 async function initializeGoogleServices() {
   const services = ['drive', 'sheets'];
   for (const service of services) {
